@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import authRouter from "./Routes/auth.js"
+import dormitoryRouter from "./Routes/dormitory.js"
 
-const app = express()
+const app = express();
 dotenv.config();
 
 const connect = async () => {
@@ -14,12 +16,21 @@ const connect = async () => {
     }
 };
 
-mongoose.connection.on("connected",()=>{
-    console.log("mongoDB on")
-})
+mongoose.connection.on("disconnected", () => {
+    console.log("mongoDB disconnected!");
+  });
 
 
-app.listen(8000, () => {
+
+//middlewares
+app.use(express.json());
+app.use("/api/auth",authRouter);
+app.use("/api/dormitory",dormitoryRouter);
+app.use("/api/rooms",authRouter);
+app.use("/api/User",authRouter);
+
+
+app.listen(8800, () => {
     connect();
-    console.log("Connect BE")
+    console.log("Connect BE");
 })
