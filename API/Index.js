@@ -29,6 +29,17 @@ app.use("/api/dormitory",dormitoryRouter);
 app.use("/api/rooms",authRouter);
 app.use("/api/User",authRouter);
 
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500;
+    const errorMassage = err.message || "Something went wrong!";
+    return res.status(errorStatus).json({
+        success: false,
+        status: errorStatus,
+        message: errorMassage,
+        stack: err.stack,
+    });
+});
+
 
 app.listen(8800, () => {
     connect();
