@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./Routes/auth.js"
-import dormitoryRouter from "./Routes/dormitory.js"
+import dormitoryRouter from "./Routes/dormitorys.js"
 
 const app = express();
 dotenv.config();
@@ -18,16 +18,16 @@ const connect = async () => {
 
 mongoose.connection.on("disconnected", () => {
     console.log("mongoDB disconnected!");
-  });
+});
 
 
 
 //middlewares
 app.use(express.json());
-app.use("/api/auth",authRouter);
-app.use("/api/dormitory",dormitoryRouter);
-app.use("/api/rooms",authRouter);
-app.use("/api/User",authRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/dormitorys", dormitoryRouter);
+app.use("/api/rooms", authRouter);
+app.use("/api/User", authRouter);
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
