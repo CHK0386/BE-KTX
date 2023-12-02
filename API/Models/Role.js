@@ -5,7 +5,7 @@ const RoleSchema = new Schema(
     {
         Role: {
             type: String,
-            enum: ['admin', 'student', 'superAdmin'],
+            enum: ['admin', 'student'],
             required: true,
         },
     },

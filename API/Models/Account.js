@@ -21,7 +21,7 @@ const AccountSchema = new Schema(
         },
         RoleId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'roles',
+            ref: 'Roles',
             required: true,
         },
         
@@ -29,4 +29,4 @@ const AccountSchema = new Schema(
     { timestamps: true }
 );
 
-export default mongoose.model("Accounts", AccountSchema);
+export default mongoose.model("Account", AccountSchema);
