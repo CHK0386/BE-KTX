@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/CHK0386/BE-KTX#readme",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongodb": "^6.3.0"

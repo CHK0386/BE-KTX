@@ -6,6 +6,7 @@ const AccountSchema = new Schema(
         CMND: {
             type: String,
             required: true,
+            unique: true,
         },
         MatKhau: {
             type: String,
@@ -18,6 +19,7 @@ const AccountSchema = new Schema(
                 },
                 message: props => `${props.value} Does not meet the length and structure requirements for the password!`,
             },
+            unique: true,
         },
         RoleId: {
             type: mongoose.Schema.Types.ObjectId,
