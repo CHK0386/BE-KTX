@@ -32,8 +32,12 @@ export const login = async (req, res, next) => {
         );
         if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"))
 
-        const token = jwt.sign({id:account._id, RoleId:account.RoleId});
-        res.status(201).json(account)
+        const token = jwt.sign({id:account._id, RoleId:account.RoleId}, process.env.JWT);
+        res.cookie("access_token", token,{
+            httpOnly: true,
+        })
+        .status(201)
+        .json(account)
     } catch (err) {
         next(err);
     }

@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./Routes/auth.js"
 import dormitoryRouter from "./Routes/dormitorys.js"
+import roomRouter from "./Routes/rooms.js"
+import UserRouter from "./Routes/Users.js"
+import cookieParser from "cookie-parser"
 
 const app = express();
 dotenv.config();
@@ -23,11 +26,12 @@ mongoose.connection.on("disconnected", () => {
 
 
 //middlewares
+app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/dormitorys", dormitoryRouter);
-app.use("/api/rooms", authRouter);
-app.use("/api/User", authRouter);
+app.use("/api/rooms", roomRouter);
+app.use("/api/User", UserRouter);
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
