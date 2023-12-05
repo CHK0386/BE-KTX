@@ -32,7 +32,7 @@ export const login = async (req, res, next) => {
         );
         if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"))
 
-        const token = jwt.sign({id:account._id, RoleId:account.RoleId}, process.env.JWT);
+        const token = jwt.sign({id:account._id, RoleId:account.RoleId}, process.env.JWT,{ expiresIn: '1h' });
         res.cookie("access_token", token,{
             httpOnly: true,
         })
