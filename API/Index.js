@@ -6,6 +6,7 @@ import dormitoryRouter from "./Routes/dormitorys.js"
 import roomRouter from "./Routes/rooms.js"
 import UserRouter from "./Routes/Users.js"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ mongoose.connection.on("disconnected", () => {
 
 
 //middlewares
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);

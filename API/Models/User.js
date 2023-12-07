@@ -13,6 +13,12 @@ const Userchema = new mongoose.Schema({
     CMND: {
         type: String,
         required: true,
+        unique: true,
+    },
+    Matk: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        default: null,
     },
     GioiTinh: {
         type: String,
@@ -44,7 +50,7 @@ const Userchema = new mongoose.Schema({
     Address: {
         type: String,
         required: true,
-    },
+    }
 },
     { timestamps: true }
 );

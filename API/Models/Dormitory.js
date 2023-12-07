@@ -5,14 +5,6 @@ const KTXSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Type: {
-        type: String,
-        required: true,
-    },
-    Status: {
-        type: Number,
-        required: true,
-    },
     Address: {
         type: String,
         required: true,
@@ -28,24 +20,12 @@ const KTXSchema = new mongoose.Schema({
     Room: {
         type: [String],
     },
-    Featured: {
-        type: Boolean,
-        default: false,
-    },
     CheapestPrice: {
         type: Number,
         required: true,
     },
-    Distance: {
-        type: String,
-        required: true,
-    },
     Photos: {
         type: [String],
-    },
-    Title: {
-        type: String,
-        required: true,
     },
 });
 
