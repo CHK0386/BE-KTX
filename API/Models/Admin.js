@@ -1,14 +1,10 @@
 import mongoose from "mongoose";
 
-const Userchema = new mongoose.Schema({
+const Adminchema = new mongoose.Schema({
     HoTen: {
         type: String,
         required: true,
         unique: true,
-    },
-    Mssv: {
-        type: String,
-        required: true,
     },
     CMND: {
         type: mongoose.Schema.Types.ObjectId,
@@ -50,4 +46,4 @@ const Userchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-export default mongoose.model("User", Userchema);
+export default mongoose.model("Admin", Adminchema);

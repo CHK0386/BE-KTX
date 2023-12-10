@@ -1,6 +1,8 @@
 import  Jwt  from "jsonwebtoken";
 import { createError } from "../Utils/Error.js";
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb";
+// import Account from "../Models/Account.js";
+// import Role from "../Models/Role.js"
 
 
 export const Verifytoken = (req,res,next)=>{
@@ -25,15 +27,12 @@ export const VerifyUser = (req,res,next)=>{
         }
     })
 }
-
-export const VerifyAdmin = (req,res,next)=>{
-    const accountId = new ObjectId("656cb27c0219ef038cbbcd6c");
-    const isAdmin = checkAdminRole(accountId);
-    Verifytoken(req,res,next,()=>{
-        if(isAdmin){
-            next()
-        }else{
-            if(err) return next(createError(403,"you are not authorized"));
-        }
-    })
-}
+export const VerifyAdmin = (req, res, next) => {
+    verifyToken(req, res, () => {
+      if (req.Roles.Role = 'admin' ) {
+        next();
+      } else {
+        return next(createError(403, "You are not authorized!"));
+      }
+    });
+  };

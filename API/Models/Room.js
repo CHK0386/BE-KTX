@@ -14,6 +14,10 @@ const RoomSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    St: {
+        type: String,
+        required: true,
+    },
     Slot: {
         type: Number,
         required: true,

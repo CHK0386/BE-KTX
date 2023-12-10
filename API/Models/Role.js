@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const RoleSchema = new Schema(
     {
-        Role: {
+        role: {
             type: String,
             enum: ['admin', 'student'],
             required: true,
