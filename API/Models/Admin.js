@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const Adminchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
     HoTen: {
         type: String,
         required: true,
@@ -46,4 +46,4 @@ const Adminchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-export default mongoose.model("Admin", Adminchema);
+export default mongoose.model("Admin", AdminSchema);

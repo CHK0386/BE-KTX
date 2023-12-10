@@ -11,7 +11,7 @@ const AccountSchema = new Schema(
         MatKhau: {
             type: String,
             required: true,
-            default: 'Password@1234',
+            default: 'Password@123',
             validate: {
                 validator: function(value) {
                     // Kiểm tra xem mật khẩu có bao gồm số, kí tự, và ít nhất 1 kí tự đặc biệt
