@@ -1,5 +1,5 @@
 import Dormitory from "../Models/Dormitory.js";
-
+import Room from "../Models/Room.js";
 //Create
 export const createDormitory = async (req, res, next) => {
     const newDormitory = new Dormitory(req.body)
@@ -51,6 +51,21 @@ export const getallDormitory = async (req, res, next) => {
     try {
         const dormitorys = await Dormitory.find();
         res.status(200).json(dormitorys);
+    } catch (err) {
+        next(err);
+    }
+}
+
+//GetRooms
+
+export const getDormitoryRoom = async (req, res, next) => {
+    try {
+        const dormitoryR = await Dormitory.findById(req.params.id)
+        const list = await Promise.all(
+            dormitoryR.Room.map(room => {
+            return Room.findById(room);
+        }))
+        res.status(200).json(list);
     } catch (err) {
         next(err);
     }

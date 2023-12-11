@@ -1,4 +1,5 @@
 import Admin from "../Models/Admin";
+import Room from "../Models/Room.js";
 
 //Create
 export const createAdmin = async (req, res, next) => {

@@ -41,7 +41,11 @@ const AdminSchema = new mongoose.Schema({
     Address: {
         type: String,
         required: true,
-    }
+    },
+    DateOfBirth: {
+        type: Date,
+        required: true
+    },
 },
     { timestamps: true }
 );

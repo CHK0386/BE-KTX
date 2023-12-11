@@ -4,6 +4,7 @@ import {
     createDormitory,
     deleteDormitory,
     getDormitory,
+    getDormitoryRoom,
     getallDormitory,
     updateDormitory
 } from "../Controllers/dormitory.js";
@@ -19,5 +20,6 @@ router.delete("/:id", deleteDormitory);
 router.get("/:id", getDormitory);
 //Getall
 router.get("/", getallDormitory);
+router.get("/room/:id", getDormitoryRoom);
 
 export default router

@@ -45,7 +45,15 @@ const Userchema = new mongoose.Schema({
     Address: {
         type: String,
         required: true,
-    }
+    },
+    DateOfBirth: {
+        type: Date,
+        required: true
+    },
+    NienKhoa: {
+        type: String,
+        required: true
+    },
 },
     { timestamps: true }
 );
