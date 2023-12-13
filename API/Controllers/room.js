@@ -32,7 +32,7 @@ export const updateRoom = async (req, res, next) => {
         res.status(500).json(error);
     }
 }
-
+//update ngày cho cái phòng ý là ngày book hoặc ngày hết hạn tùy
 export const updateRoomavAilability = async (req, res, next) => {
     try {
         await Room.updateOne({"RoomNumbers._id": req.params.id},{
