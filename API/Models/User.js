@@ -11,9 +11,14 @@ const Userchema = new mongoose.Schema({
         required: true,
     },
     CMND: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Account',
         default: null,
+    },
+    Matk:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        required: true,
     },
     GioiTinh: {
         type: String,

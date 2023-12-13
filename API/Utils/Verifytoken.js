@@ -2,7 +2,7 @@ import  Jwt  from "jsonwebtoken";
 import { createError } from "../Utils/Error.js";
 // import { ObjectId } from "mongodb";
 import Role from "../Models/Role.js"
-
+import Account from "../Models/Account.js";
 
 export const Verifytoken = (req,res,next)=>{
     const token = req.cookies.access_token;
@@ -17,6 +17,20 @@ export const Verifytoken = (req,res,next)=>{
     })
 }
 
+async function isAdmin(accountId) {
+    try {
+      const account = await Account.findById(accountId);
+      if (!account) {
+        return false; // Tài khoản không tồn tại
+      }
+  
+      const role = await Role.findById(account.RoleId);
+      return role.role === "admin";
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+      return false;
+    }
+  }
 export const VerifyUser = (req,res,next)=>{
     Verifytoken(req,res,next,()=>{
         if(req,account.id === req.param.id || req.account.RoleId){
@@ -29,7 +43,7 @@ export const VerifyUser = (req,res,next)=>{
 
 export const VerifyAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
-      if (req.user.RoleId === Role.RoleId || Role.role ==="admin") {
+      if (isAdmin) {
         next();
       } else {
         return next(createError(403, "You are not authorized!"));

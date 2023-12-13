@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const AccountSchema = new Schema(
     {
         CMND: {
-            type: Number,
+            type: String,
             required: true,
             unique: true,
         },

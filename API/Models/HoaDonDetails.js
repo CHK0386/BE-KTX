@@ -2,18 +2,21 @@ import mongoose from "mongoose";
 
 const HoaDonDetailSchema = new mongoose.Schema({
     CMND: {
+        type: String,
+        ref: 'User',
+        required: true,
+    },
+    UserId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     },
-    Mssv: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    MSSV: {
+        type: String,
         required: true,
     },
     St: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Room',
+        type: String,
         required: true,
     },
     RoomId: {
