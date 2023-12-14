@@ -56,8 +56,7 @@ export const getallDormitory = async (req, res, next) => {
     }
 }
 
-//GetRooms
-
+//GetRooms lấy phòng từ tầng
 export const getDormitoryRoom = async (req, res, next) => {
     try {
         const dormitoryR = await Dormitory.findById(req.params.id)

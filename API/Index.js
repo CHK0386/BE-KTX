@@ -7,7 +7,6 @@ import roomRouter from "./Routes/rooms.js"
 import UserRouter from "./Routes/Users.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
-
 const app = express();
 dotenv.config();
 
@@ -34,17 +33,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/dormitorys", dormitoryRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/User", UserRouter);
+app.post('/api/bookings',);
 
-app.use((err, req, res, next) => {
-    const errorStatus = err.status || 500;
-    const errorMassage = err.message || "Something went wrong!";
-    return res.status(errorStatus).json({
-        success: false,
-        status: errorStatus,
-        message: errorMassage,
-        stack: err.stack,
-    });
-});
 
 
 app.listen(8800, () => {
