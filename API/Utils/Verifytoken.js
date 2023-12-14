@@ -29,9 +29,7 @@ export const VerifyUser = (req, res, next) => {
 
 export const VerifyAdmin = async (req, res, next) => {
     try {
-        const { userId } = req;
-
-        const account = await Account.findById(userId);
+        const account = await Account.findOne({ CMND: req.body.CMND });
 
         if (!account) {
             return res.status(401).json({ message: 'User not found' });
@@ -52,37 +50,5 @@ export const VerifyAdmin = async (req, res, next) => {
         console.error('Error in VerifyAdmin middleware:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
-    // try {
-    //     const { userId } = req;
-
-    //     const account = await Account.findById(userId);
-    //     // const account = await Account.findById(req.account.id);
-
-    //     if (!account) {
-    //         return next(createError(401, "User not found"));
-    //     }
-
-    //     const role = await Role.findById(account.RoleId);
-
-    //     verifyToken(req, res, () => {
-    //         if (role && role.role === 'admin') {
-    //             next();
-    //         } else {
-    //             return next(createError(403, "You are not authorized!"));
-    //         }
-    //     });
-    // } catch (error) {
-    //     console.error('Error in VerifyAdmin middleware:', error);
-    //     return res.status(500).json({ message: 'Internal server error' });
-    // }
-    // const account = Account.findOne(req.account.id)
-    // const role = Role.findById(account.RoleId);
-    // verifyToken(req, res, () => {
-    //     if (role && role.role === 'admin') {
-    //         next();
-    //     } else {
-    //         return next(createError(403, "You are not authorized!"));
-    //     }
-    // });
 
 };
