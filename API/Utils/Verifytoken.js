@@ -27,15 +27,62 @@ export const VerifyUser = (req, res, next) => {
     })
 }
 
-export const VerifyAdmin = (req, res, next) => {
-    const account = Account.findOne(req.account.id)
-    const role = Role.findById(account.RoleId);
-    verifyToken(req, res, () => {
-        if (role && role.role === 'admin') {
-            next();
-        } else {
-            return next(createError(403, "You are not authorized!"));
+export const VerifyAdmin = async (req, res, next) => {
+    try {
+        const { userId } = req;
+
+        const account = await Account.findById(userId);
+
+        if (!account) {
+            return res.status(401).json({ message: 'User not found' });
         }
-    });
+
+        if (account.RoleId) {
+            const role = await Role.findById(account.RoleId);
+
+            if (role && role.role === 'admin') {
+                next();
+            } else {
+                return res.status(403).json({ message: 'User does not have admin privileges' });
+            }
+        } else {
+            return res.status(403).json({ message: 'User does not have a role assigned' });
+        }
+    } catch (error) {
+        console.error('Error in VerifyAdmin middleware:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+    // try {
+    //     const { userId } = req;
+
+    //     const account = await Account.findById(userId);
+    //     // const account = await Account.findById(req.account.id);
+
+    //     if (!account) {
+    //         return next(createError(401, "User not found"));
+    //     }
+
+    //     const role = await Role.findById(account.RoleId);
+
+    //     verifyToken(req, res, () => {
+    //         if (role && role.role === 'admin') {
+    //             next();
+    //         } else {
+    //             return next(createError(403, "You are not authorized!"));
+    //         }
+    //     });
+    // } catch (error) {
+    //     console.error('Error in VerifyAdmin middleware:', error);
+    //     return res.status(500).json({ message: 'Internal server error' });
+    // }
+    // const account = Account.findOne(req.account.id)
+    // const role = Role.findById(account.RoleId);
+    // verifyToken(req, res, () => {
+    //     if (role && role.role === 'admin') {
+    //         next();
+    //     } else {
+    //         return next(createError(403, "You are not authorized!"));
+    //     }
+    // });
 
 };

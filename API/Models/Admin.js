@@ -7,7 +7,7 @@ const AdminSchema = new mongoose.Schema({
         unique: true,
     },
     CMND: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Account',
         default: null,
     },
