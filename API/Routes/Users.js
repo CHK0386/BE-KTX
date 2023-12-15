@@ -7,7 +7,7 @@ const router = express.Router();
 //Create
 router.post("/", VerifyAdmin, createUser);
 //Update
-router.put("/:id", VerifyAdmin, updateUser);
+router.put("/:id", updateUser);
 //Delete
 router.delete("/:id", VerifyAdmin, deleteUser);
 //Get

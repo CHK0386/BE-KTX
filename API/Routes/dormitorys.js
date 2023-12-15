@@ -8,14 +8,15 @@ import {
     getallDormitory,
     updateDormitory
 } from "../Controllers/dormitory.js";
+import { VerifyAdmin } from "../Utils/Verifytoken.js";
 const router = express.Router();
 
 //Create
-router.post("/", createDormitory);
+router.post("/", VerifyAdmin,  createDormitory);
 //Update
-router.put("/:id", updateDormitory);
+router.put("/:id", VerifyAdmin,  updateDormitory);
 //Delete
-router.delete("/:id", deleteDormitory);
+router.delete("/:id", VerifyAdmin,  deleteDormitory);
 //Get
 router.get("/:id", getDormitory);
 //Getall

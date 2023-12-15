@@ -1,6 +1,12 @@
+import { boolean } from "joi";
 import mongoose from "mongoose";
 
 const HoaDonSchema = new mongoose.Schema({
+    RoomId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Room',
+        required: true,
+    },
     Price: {
         type: Number,
         required: true,
@@ -10,6 +16,10 @@ const HoaDonSchema = new mongoose.Schema({
         ref: 'HoaDonDetails',
         required: true,
     },
+    Status: {
+        type: String,
+        required: true,
+    }
 },
     { timestamps: true }
 );
