@@ -1,4 +1,3 @@
-import { boolean } from "joi";
 import mongoose from "mongoose";
 
 const HoaDonSchema = new mongoose.Schema({
@@ -14,7 +13,6 @@ const HoaDonSchema = new mongoose.Schema({
     IdDetails: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'HoaDonDetails',
-        required: true,
     },
     Status: {
         type: String,

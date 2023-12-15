@@ -2,6 +2,7 @@ import Accounts from "../Models/Account.js"
 import bcrypt from "bcryptjs"
 import { createError } from "../Utils/Error.js"
 import jwt from "jsonwebtoken";
+import User from "../Models/User.js";
 
 
 //register
