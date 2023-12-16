@@ -2,7 +2,6 @@ import Jwt from "jsonwebtoken";
 import { createError } from "../Utils/Error.js";
 // import { ObjectId } from "mongodb";
 import Role from "../Models/Role.js"
-import Account from "../Models/Account.js";
 
 export const Verifytoken = (req, res, next) => {
     const token = req.cookies.access_token;
@@ -27,28 +26,50 @@ export const VerifyUser = (req, res, next) => {
     })
 }
 
+// export const VerifyAdmin = async (req, res, next) => {
+//     try {
+//         const account = await Account.findOne({ CMND: req.body.CMND });
+
+//         if (!account) {
+//             return res.status(401).json({ message: 'User not found' });
+//         }
+
+//         if (account.RoleId) {
+
+//             const role = await Role.findById(account.RoleId);
+
+//             if (role && role.role === 'admin') {
+//                 next();
+//             } else {
+//                 return res.status(403).json({ message: 'User does not have admin privileges' });
+//             }
+//         } else {
+//             return res.status(403).json({ message: 'User does not have a role assigned' });
+//         }
+//     } catch (error) {
+//         console.error('Error in VerifyAdmin middleware:', error);
+//         return res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
 export const VerifyAdmin = async (req, res, next) => {
     try {
-        const account = await Account.findOne({ CMND: req.body.CMND });
+        await Verifytoken(req, res, next, async () => {
 
-        if (!account) {
-            return res.status(401).json({ message: 'User not found' });
-        }
-
-        if (account.RoleId) {
-            const role = await Role.findById(account.RoleId);
-
-            if (role && role.role === 'admin') {
-                next();
+            if (req.account.RoleId) {
+    
+                const role = await Role.findById(req.account.RoleId);
+    
+                if (req.account.id === req.param.id ||role && role.role === 'admin') {
+                    next();
+                } else {
+                    return res.status(403).json({ message: 'User does not have admin privileges' });
+                }
             } else {
-                return res.status(403).json({ message: 'User does not have admin privileges' });
+                return res.status(403).json({ message: 'User does not have a role assigned' });
             }
-        } else {
-            return res.status(403).json({ message: 'User does not have a role assigned' });
-        }
+        })
     } catch (error) {
         console.error('Error in VerifyAdmin middleware:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
-
 };

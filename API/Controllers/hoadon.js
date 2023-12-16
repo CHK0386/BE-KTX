@@ -11,7 +11,7 @@ export const createHD = async (req, res, next) => {
       const savedHD = new HD({
         RoomId: req.body.RoomId,
         Price: req.body.Price,
-        IdDetails: req.body.DateOut,
+        IdDetails: req.body.IdDetails,
         Status: req.body.Status
     });
        await newHD.save()
@@ -24,8 +24,8 @@ export const createHD = async (req, res, next) => {
 
 //Create HDCT
 export const createHDCT = async (req, res, next) => {
-  const userId = await User.findOne({ _id: req.body._id });
-  const roomId = await Room.findOne({ _id: req.body._id });
+  const userId = await User.findOne({ id: req.body.id });
+  const roomId = await Room.findOne({ id: req.body.id });
   const hdId = req.params.hdId;
     const newHDCT = new HDCT(req.body);
     try {

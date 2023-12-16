@@ -5,18 +5,18 @@ import { createHD, createHDCT, getHDCT, getallHD, gethoadon, updateHD, updateHDC
 const router = express.Router();
 
 //Create HD
-router.post("/", VerifyAdmin, createHD);
+router.post("/", createHD);
 //Create HDCT
-router.post("/:hdId", VerifyAdmin, createHDCT);
+router.post("/:hdId", createHDCT);
 //Update
-router.put("/:id",VerifyAdmin, updateHD);
-router.put("/:id",VerifyAdmin, updateHDCT);
+router.put("/:id", updateHD);
+router.put("/:id", updateHDCT);
 //Delete
 // router.delete("/:id", VerifyAdmin);
 //Get
-router.get("/:id",getHDCT);
+router.get("/:id", getHDCT);
 //Getall
-router.get("/", VerifyAdmin, getallHD);
+router.get("/", getallHD);
 router.get("/hoadondetails/:id", gethoadon);
 
 export default router

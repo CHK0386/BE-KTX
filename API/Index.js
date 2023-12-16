@@ -36,7 +36,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/dormitorys", dormitoryRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/User", UserRouter);
-app.post('/api/HD', HDRouter);
+app.use("/api/hd", HDRouter);
 
 
 

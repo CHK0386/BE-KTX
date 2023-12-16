@@ -11,8 +11,7 @@ const HoaDonSchema = new mongoose.Schema({
         required: true,
     },
     IdDetails: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'HoaDonDetails',
+        type: [String],
     },
     Status: {
         type: String,

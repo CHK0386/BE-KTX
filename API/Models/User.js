@@ -11,7 +11,7 @@ const Userchema = new mongoose.Schema({
         required: true,
     },
     CMND: {
-        type: String,
+        type: Number,
         ref: 'Account',
         default: null,
     },

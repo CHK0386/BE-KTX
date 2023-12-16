@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const HoaDonDetailSchema = new mongoose.Schema({
     CMND: {
-        type: String,
+        type: Number,
         ref: 'User',
         required: true,
     },
