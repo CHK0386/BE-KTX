@@ -14,6 +14,16 @@ const router = express.Router();
 // });
 
 
+router.get("/checkauth", Verifytoken,(req,res,next)=>{
+    res.send("you are logged in");
+});
+router.get("/checkuser/:id", VerifyUser,(req,res,next)=>{
+    res.send("you are logged in user");
+});
+router.get("/checkadmin/:id", VerifyAdmin,(req,res,next)=>{
+    res.send("you are logged in admin account");
+});
+
 var registerValidationSchema = {
 	// Nếu dùng req.body thì dùng Segments.BODY
 	[Segments.BODY]: Joi.object().keys({
@@ -22,17 +32,6 @@ var registerValidationSchema = {
 		RoleId: Joi.string()
 	}),
 };
-
-router.get("/checkauth", Verifytoken,(req,res,next)=>{
-    res.send("you are logged in");
-});
-router.get("/checkuser/:id", VerifyUser,(req,res,next)=>{
-    res.send("you are logged in");
-});
-router.get("/checkadmin/:id", VerifyAdmin,(req,res,next)=>{
-    res.send("you are logged in admin account");
-});
-
 router.post("/register", celebrate(registerValidationSchema), register);
 router.post("/login", login);
 

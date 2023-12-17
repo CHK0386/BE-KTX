@@ -1,7 +1,8 @@
 import Jwt from "jsonwebtoken";
 import { createError } from "../Utils/Error.js";
 // import { ObjectId } from "mongodb";
-import Role from "../Models/Role.js"
+import Roles from "../Models/Role.js"
+import Accounts from "../Models/Account.js"
 
 export const Verifytoken = (req, res, next) => {
     const token = req.cookies.access_token;
@@ -18,7 +19,7 @@ export const Verifytoken = (req, res, next) => {
 
 export const VerifyUser = (req, res, next) => {
     Verifytoken(req, res, next, () => {
-        if (req.account.id === req.param.id || req.account.RoleId) {
+        if (req.account.id === req.param.id) {
             next()
         } else {
             if (err) return next(createError(403, "you are not authorized"));
@@ -26,23 +27,27 @@ export const VerifyUser = (req, res, next) => {
     })
 }
 
+
 // export const VerifyAdmin = async (req, res, next) => {
 //     try {
-//         const account = await Account.findOne({ CMND: req.body.CMND });
+//         const { CMND } = req.body;
+//         // Kiểm tra xem người dùng có tồn tại không
+//         const account = await Accounts.findOne({ CMND });
 
 //         if (!account) {
 //             return res.status(401).json({ message: 'User not found' });
 //         }
-
+//         // Kiểm tra quyền của người dùng
 //         if (account.RoleId) {
-
-//             const role = await Role.findById(account.RoleId);
-
-//             if (role && role.role === 'admin') {
-//                 next();
-//             } else {
-//                 return res.status(403).json({ message: 'User does not have admin privileges' });
-//             }
+//             const role = await Roles.findById(account.RoleId);
+//             Verifytoken(req, res, next, () => {
+//                 if (role && role.role==='admin') {
+//                     // Nếu có quyền admin, cho phép tiếp tục
+//                     next();
+//                 } else {
+//                     return res.status(403).json({ message: 'User does not have admin privileges' });
+//                 }
+//             })
 //         } else {
 //             return res.status(403).json({ message: 'User does not have a role assigned' });
 //         }
@@ -51,25 +56,34 @@ export const VerifyUser = (req, res, next) => {
 //         return res.status(500).json({ message: 'Internal server error' });
 //     }
 // };
+
 export const VerifyAdmin = async (req, res, next) => {
     try {
-        await Verifytoken(req, res, next, async () => {
+        // Kiểm tra xem người dùng có tồn tại không
+        const account = await Accounts.findOne({ CMND: req.body.CMND });
 
-            if (req.account.RoleId) {
-    
-                const role = await Role.findById(req.account.RoleId);
-    
-                if (req.account.id === req.param.id ||role && role.role === 'admin') {
+        if (!account) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        // Kiểm tra quyền của người dùng
+        if (account.RoleId) {
+            const role = await Roles.findById(account.RoleId);
+
+            Verifytoken(req, res,next, async () => {
+                if (role && role.role === 'admin') {
+                    // Nếu có quyền admin, cho phép tiếp tục
                     next();
                 } else {
                     return res.status(403).json({ message: 'User does not have admin privileges' });
                 }
-            } else {
-                return res.status(403).json({ message: 'User does not have a role assigned' });
-            }
-        })
+            });
+        } else {
+            return res.status(403).json({ message: 'User does not have a role assigned' });
+        }
     } catch (error) {
         console.error('Error in VerifyAdmin middleware:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
