@@ -3,7 +3,7 @@ import Room from "../Models/Room.js";
 
 //Create
 export const createAdmin = async (req, res, next) => {
-    const newAdmin = new Admins(req.body)
+    const newAdmin = new Admin(req.body)
     try {
         const savedAdmin = await newAdmin.save()
         res.status(200).json(savedAdmin)
@@ -14,7 +14,7 @@ export const createAdmin = async (req, res, next) => {
 //Update
 export const updateAdmin = async (req, res, next) => {
     try {
-        const updatedAdmin = await Admins.findByIdAndUpdate(
+        const updatedAdmin = await Admin.findByIdAndUpdate(
             req.params.id,
             { $set: req.body },
             { new: true }
@@ -28,7 +28,7 @@ export const updateAdmin = async (req, res, next) => {
 //Delete
 export const deleteAdmin = async (req, res, next) => {
     try {
-        await Admins.findByIdAndDelete(
+        await Admin.findByIdAndDelete(
             req.params.id
         );
         res.status(200).json("Delete Success");
@@ -39,7 +39,7 @@ export const deleteAdmin = async (req, res, next) => {
 //Get
 export const getAdmin = async (req, res, next) => {
     try {
-        const Admin = await Admins.findById(
+        const Admin = await Admin.findById(
             req.params.id
         );
         res.status(200).json(Admin);
