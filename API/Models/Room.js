@@ -10,6 +10,11 @@ const RoomSchema = new mongoose.Schema({
         enum: ['Available', 'Full'],
         required: true,
     },
+    UserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     Price: {
         type: Number,
         required: true,
