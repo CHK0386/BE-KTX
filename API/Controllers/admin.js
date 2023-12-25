@@ -1,4 +1,4 @@
-import Admin from "../Models/Admin";
+import Admin from "../Models/Admin.js";
 import Room from "../Models/Room.js";
 
 //Create

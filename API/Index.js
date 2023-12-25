@@ -6,6 +6,8 @@ import dormitoryRouter from "./Routes/dormitorys.js";
 import roomRouter from "./Routes/rooms.js";
 import UserRouter from "./Routes/Users.js";
 import HDRouter from "./Routes/hd.js";
+import AdminRouter from "./Routes/admin.js"
+import RoleRouter from "./Routes/roles.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import httpStatus from "http-status";
@@ -46,6 +48,8 @@ app.use("/api/dormitorys", dormitoryRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/User", UserRouter);
 app.use("/api/hd", HDRouter);
+app.use("/api/role", RoleRouter);
+app.use("/api/admin", AdminRouter);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

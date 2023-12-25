@@ -1,6 +1,7 @@
 import Room from "../Models/Room.js";
 import Dormitory from "../Models/Dormitory.js";
 import { createError } from "../Utils/Error.js";
+import RoomDetails from "../Models/RoomDetails.js"
 
 export const createRoom = async (req,res,next)=>{
     const dormitoryId = req.params.dormitoryId;
@@ -19,6 +20,17 @@ export const createRoom = async (req,res,next)=>{
         next(err);
       }
 };
+
+export const createRoomDetails = async (req,res,next)=>{
+    const newDetails = new RoomDetails(req.body)
+    try {
+        const savedRoomDetails = await newDetails.save()
+        res.status(200).json(savedRoomDetails)
+    } catch (err) {
+        next(err)
+    }
+};
+
 //Update
 export const updateRoom = async (req, res, next) => {
     try {
@@ -28,6 +40,19 @@ export const updateRoom = async (req, res, next) => {
             { new: true }
         );
         res.status(200).json(updatedRoom);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+export const updateRoomDetails = async (req, res, next) => {
+    try {
+        const updatedRoomDetails = await RoomDetails.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+        res.status(200).json(updatedRoomDetails);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -65,6 +90,17 @@ export const deleteRoom = async (req, res, next) => {
         res.status(500).json(error);
     }
 }
+
+export const deleteRoomDetails = async (req, res, next) => {
+    try {
+        await RoomDetails.findByIdAndDelete(
+            req.params.id
+        );
+        res.status(200).json("Delete Success");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 //Get
 export const getRoom = async (req, res, next) => {
     try {
@@ -76,11 +112,31 @@ export const getRoom = async (req, res, next) => {
         res.status(500).json(error);
     }
 }
+
+export const getRoomDetail = async (req, res, next) => {
+    try {
+        const roomdetail = await RoomDetails.findById(
+            req.params.id
+        );
+        res.status(200).json(roomdetail);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 //Getall
 export const getallRoom = async (req, res, next) => {
     try {
         const rooms = await Room.find();
         res.status(200).json(rooms);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const getallRoomDetails = async (req, res, next) => {
+    try {
+        const roomdetails = await RoomDetails.find();
+        res.status(200).json(roomdetails);
     } catch (err) {
         next(err);
     }
