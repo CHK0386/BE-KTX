@@ -1,24 +1,28 @@
 import  express  from "express";
 import { createRoom, createRoomDetails, deleteRoom, deleteRoomDetails, getRoom, getRoomDetail, getallRoom, getallRoomDetails, updateRoom, updateRoomDetails, updateRoomavAilability } from "../Controllers/room.js";
-import { VerifyAdmin } from "../Utils/Verifytoken.js";
+import { VerifyAdmin,VerifyUser  } from "../Utils/Verifytoken.js";
 
 const router = express.Router();
 
 //Create
 router.post("/:dormitoryId", VerifyAdmin,  createRoom);
-router.post("/", VerifyAdmin,  createRoomDetails);
+//add sv vào room
+router.post("/details", VerifyAdmin, createRoomDetails);
 //Update
-router.put("/availability/:id", updateRoomavAilability);
-router.put("/:id", VerifyAdmin,  updateRoom);
-router.post("/:id", VerifyAdmin,  updateRoomDetails);
+router.put("/availability/:id", VerifyAdmin, updateRoomavAilability);
+router.put("/:id", VerifyAdmin, updateRoom);
+router.put("/details/:id", VerifyAdmin,  updateRoomDetails);
 //Delete
 router.delete("/:id/:dormitoryId", VerifyAdmin, deleteRoom);
 router.delete("/:id", VerifyAdmin, deleteRoomDetails);
 //Get
 router.get("/:id", getRoom);
-router.get("/:id", getRoomDetail);
+router.get("/details/:id",VerifyAdmin, getRoomDetail);
 //Getall
 router.get("/", getallRoom);
-router.get("/", getallRoomDetails);
+router.get("/getalldetails",VerifyAdmin, getallRoomDetails);
+
+// //Checkout Room
+// router.post("/:roomId", VerifyUser, checkoutRoom);
 
 export default router
