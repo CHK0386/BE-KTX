@@ -5,7 +5,7 @@ import { VerifyAdmin,VerifyUser  } from "../Utils/Verifytoken.js";
 const router = express.Router();
 
 //Create
-router.post("/:dormitoryId", VerifyAdmin,  createRoom);
+router.post("/dorm/:dormitoryId", VerifyAdmin,  createRoom);
 //add sv vào room
 router.post("/details", VerifyAdmin, createRoomDetails);
 //Update
