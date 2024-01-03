@@ -28,7 +28,8 @@ export const VerifyUser = (req, res, next) => {
 };
 
 export const VerifyAdmin = async (req, res, next) => {
-	const { CMND } = req.body;
+	Verifytoken(req, res, next, async () => {
+		const { CMND } = req.body;
 
 	try {
 		// Kiểm tra xem người dùng có tồn tại không
@@ -70,6 +71,9 @@ export const VerifyAdmin = async (req, res, next) => {
 		console.error("Error in VerifyAdmin middleware:", error);
 		return res.status(500).json({ message: "Internal server error" });
 	}
+
+	});
+	
 };
 
 // export const VerifyAdmin = async (req, res, next) => {

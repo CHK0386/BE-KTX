@@ -5,7 +5,7 @@ import { VerifyAdmin } from "../Utils/Verifytoken.js";
 const router = express.Router();
 
 //Create
-router.post("/", VerifyAdmin, createUser);
+router.post("/", createUser);
 //Update
 router.put("/:id", updateUser);
 //Delete
