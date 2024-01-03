@@ -97,30 +97,3 @@ export const getallRoom = async (req, res, next) => {
 
 
 
-//CheckOut
-// export const checkoutRoom = async (req, res, next) => {
-//     try {
-//         const roomId = req.params.roomId;
-
-//         // Find the room by ID
-//         const room = await Room.findById(roomId);
-
-//         // Check if the room exists
-//         if (!room) {
-//             return res.status(404).json({ message: 'Room not found' });
-//         }
-
-//         // Update room status or perform any necessary checkout logic
-//         room.StatusId = 'Available';
-//         room.UserId = undefined; // Assuming you store the user who booked the room
-
-//         // Save the updated room
-//         const updatedRoom = await room.save();
-
-//         // Respond with the updated room or a success message
-//         res.status(200).json(updatedRoom);
-//     } catch (error) {
-//         // Handle errors
-//         next(error);
-//     }
-// };
