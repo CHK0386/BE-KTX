@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import { createError } from "../Utils/Error.js"
 import jwt from "jsonwebtoken";
 import User from "../Models/User.js";
+import Role from "../Models/Role.js";
 
 
 //register
@@ -33,13 +34,17 @@ export const login = async (req, res, next) => {
             account.MatKhau
         );
         if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"))
+        const role = await Role.findOne({ _id: account.RoleId });g
 
-        const token = jwt.sign({id:account._id, RoleId:account.RoleId}, process.env.JWT,{ expiresIn: '1h' });
+        const token = jwt.sign({id:account._id, CMND:account.CMND, RoleId:account.RoleId }, process.env.JWT,{ expiresIn: '1h' });
+        const { MatKhau, RoleId, CMND, _id } = account._doc;
         res.cookie("access_token", token,{
             httpOnly: true,
         })
         .status(201)
-        .json(account)
+        .json({ details: { CMND, MatKhau, _id , RoleId}, role });
+
+
     } catch (err) {
         next(err);
     }
