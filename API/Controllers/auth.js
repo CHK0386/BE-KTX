@@ -34,7 +34,7 @@ export const login = async (req, res, next) => {
             account.MatKhau
         );
         if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"))
-        const role = await Role.findOne({ _id: account.RoleId });g
+        const role = await Role.findOne({ _id: account.RoleId });
 
         const token = jwt.sign({id:account._id, CMND:account.CMND, RoleId:account.RoleId }, process.env.JWT,{ expiresIn: '1h' });
         const { MatKhau, RoleId, CMND, _id } = account._doc;
