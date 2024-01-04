@@ -1,8 +1,8 @@
-import Users from "../Models/User.js";
+import User from "../Models/User.js";
 
 //Create
 export const createUser = async (req, res, next) => {
-    const newUser = new Users(req.body)
+    const newUser = new User(req.body)
     try {
         const savedUser = await newUser.save()
         res.status(200).json(savedUser)
@@ -13,7 +13,7 @@ export const createUser = async (req, res, next) => {
 //Update
 export const updateUser = async (req, res, next) => {
     try {
-        const updatedUser = await Users.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             { $set: req.body },
             { new: true }
@@ -27,7 +27,7 @@ export const updateUser = async (req, res, next) => {
 //Delete
 export const deleteUser = async (req, res, next) => {
     try {
-        await Users.findByIdAndDelete(
+        await User.findByIdAndDelete(
             req.params.id
         );
         res.status(200).json("Delete Success");
@@ -38,10 +38,10 @@ export const deleteUser = async (req, res, next) => {
 //Get
 export const getUser = async (req, res, next) => {
     try {
-        const User = await Users.findById(
+        const user = await User.findById(
             req.params.id
         );
-        res.status(200).json(User);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -49,8 +49,8 @@ export const getUser = async (req, res, next) => {
 //Getall
 export const getallUser = async (req, res, next) => {
     try {
-        const Users = await User.find();
-        res.status(200).json(Users);
+        const users = await User.find();
+        res.status(200).json(users);
     } catch (err) {
         next(err);
     }

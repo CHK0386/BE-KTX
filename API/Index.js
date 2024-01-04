@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/dormitorys", dormitoryRouter);
 app.use("/api/rooms", roomRouter);
-app.use("/api/User", UserRouter);
+app.use("/api/user", UserRouter);
 app.use("/api/hd", HDRouter);
 app.use("/api/role", RoleRouter);
 app.use("/api/admin", AdminRouter);
