@@ -4,7 +4,6 @@ const Userchema = new mongoose.Schema({
     HoTen: {
         type: String,
         required: true,
-        unique: true,
     },
     Mssv: {
         type: String,

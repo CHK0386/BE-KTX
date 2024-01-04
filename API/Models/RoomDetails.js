@@ -7,9 +7,11 @@ const RoomDetailSchema = new mongoose.Schema({
         required: true,
     },
     UserId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        }],
     },
 },
     { timestamps: true }

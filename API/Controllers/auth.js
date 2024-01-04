@@ -9,19 +9,19 @@ import Role from "../Models/Role.js";
 //register
 export const register = async (req, res, next) => {
     try {
-        const salt = bcrypt.genSaltSync(12);
-        const hash = bcrypt.hashSync(req.body.MatKhau, salt);
-        const newAccount = new Accounts({
-            CMND: req.body.CMND,
-            MatKhau: hash,
-            RoleId: req.body.RoleId
-        });
-        await newAccount.save()
-        res.status(201).send("Create account success")
+      const salt = bcrypt.genSaltSync(12);
+      const hash = bcrypt.hashSync(req.body.MatKhau, salt);
+      const newAccount = new Accounts({
+        CMND: req.body.CMND,
+        MatKhau: hash,
+        RoleId: req.body.RoleId
+      });
+      await newAccount.save();
+      res.status(201).json({ id: newAccount._id });
     } catch (err) {
-        next(err);
+      next(err);
     }
-}
+  };
 //login
 export const login = async (req, res, next) => {
     try {
