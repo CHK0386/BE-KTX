@@ -1,24 +1,58 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const HoaDonSchema = new mongoose.Schema({
-    RoomId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Room',
-        required: true,
+const HoaDonSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true
     },
-    Price: {
-        type: Number,
-        required: true,
+    roomId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Room',
+      required: true
     },
-    IdDetails: {
-        type: [String],
+    price: {
+      type: Number,
+      required: true
     },
-    Status: {
+    status: {
+      type: Number,
+      required: true
+    },
+    billDetails: {
+      HoTen: {
         type: String,
-        required: true,
+        required: true
+      },
+      CMND: {
+        type: Number,
+        ref: 'User',
+        required: true
+      },
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+      Mssv: {
+        type: String,
+        required: true
+      },
+      roomName: {
+        type: String,
+        required: true
+      },
+      dateIn: {
+        type: Date,
+        required: true
+      },
+      dateOut: {
+        type: Date,
+        required: true
+      }
     }
-},
-    { timestamps: true }
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model("HoaDon", HoaDonSchema);
+export default mongoose.model('HoaDon', HoaDonSchema);

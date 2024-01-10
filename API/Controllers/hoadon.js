@@ -2,59 +2,41 @@ import HD from '../Models/HoaDon.js';
 import HDCT from '../Models/HoaDonDetails.js';
 import User from '../Models/User.js';
 import Room from '../Models/Room.js';
+import HoaDonDetails from '../Models/HoaDonDetails.js';
 
 //Create
 export const createHD = async (req, res, next) => {
-  const newHD = new HD(req.body);
+  const { roomId, price, status, CMND, userId, Mssv, dateIn, dateOut, title, HoTen } = req.body;
+
   try {
+    const user = await User.findById(userId);
+    const room = await Room.findById(roomId);
+
+    if (!user || !room) {
+      return res.status(400).json({ error: 'User or Room not found.' });
+    }
+
     const savedHD = new HD({
-      RoomId: req.body.RoomId,
-      Price: req.body.Price,
-      IdDetails: req.body.IdDetails,
-      Status: req.body.Status
+      title,
+      roomId,
+      price,
+      status,
+      billDetails: {
+        HoTen: user?.HoTen,
+        CMND,
+        userId: user._id,
+        Mssv,
+        roomName: room.Title,
+        dateIn,
+        dateOut
+      }
     });
-    await newHD.save();
+
+    await savedHD.save();
     res.status(200).json(savedHD);
   } catch (err) {
     next(err);
   }
-};
-
-//Create HDCT
-export const createHDCT = async (req, res, next) => {
-  const userId = await User.findOne({ id: req.body.id });
-  const roomId = await Room.findOne({ id: req.body.id });
-  const hdId = req.params.hdId;
-  const newHDCT = new HDCT(req.body);
-  try {
-    const savedHDCT = new HDCT({
-      CMND: req.body.CMND,
-      UserId: userId,
-      MSSV: req.body.MSSV,
-      St: req.body.St,
-      RoomId: roomId,
-      DateIn: req.body.DateIn,
-      DateOut: req.body.DateOut
-    });
-    await newHDCT.save();
-    try {
-      await HD.findByIdAndUpdate(hdId, {
-        $push: { IdDetails: savedHDCT._id }
-      });
-    } catch (err) {
-      next(err);
-    }
-    res.status(200).json(savedHDCT);
-  } catch (err) {
-    next(err);
-  }
-  // const newHDCT = new HDCT(req.body)
-  // try {
-  //     const savedHDCT = await newHDCT.save()
-  //     res.status(200).json(savedHDCT)
-  // } catch (err) {
-  //     next(err)
-  // }
 };
 
 //Update
@@ -77,9 +59,11 @@ export const updateHDCT = async (req, res, next) => {
 };
 
 //Get
-export const getHDCT = async (req, res, next) => {
+export const getStudentBill = async (req, res, next) => {
   try {
-    const hdct = await HDCT.find(req.params.CMND);
+    const hdct = await HD.find({
+      'billDetails.CMND': req.params.cmnd
+    });
     res.status(200).json(hdct);
   } catch (error) {
     res.status(500).json(error);
@@ -96,15 +80,13 @@ export const getallHD = async (req, res, next) => {
 };
 
 //GetHDCCT từ HD
-export const gethoadon = async (req, res, next) => {
+export const getBillDetail = async (req, res, next) => {
   try {
     const hoadon = await HD.findById(req.params.id);
-    const list = await Promise.all(
-      hoadon.IdDetails.map((hoadondetails) => {
-        return HDCT.findById(hoadondetails);
-      })
-    );
-    res.status(200).json(list);
+    if (!hoadon) {
+      res.status(404).json('Not found');
+    }
+    res.status(200).json(hoadon);
   } catch (err) {
     next(err);
   }

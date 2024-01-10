@@ -32,7 +32,7 @@ export const login = async (req, res, next) => {
     const role = await Role.findOne({ _id: account.RoleId });
 
     const token = jwt.sign({ id: account._id, CMND: account.CMND, RoleId: account.RoleId }, process.env.JWT, {
-      expiresIn: '1h'
+      expiresIn: '24h'
     });
     const { MatKhau, RoleId, CMND, _id } = account._doc;
     res
@@ -41,6 +41,62 @@ export const login = async (req, res, next) => {
       })
       .status(201)
       .json({ details: { CMND, MatKhau, _id, RoleId }, role });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteAccount = async (req, res, next) => {
+  try {
+    const accountId = req.params.id;
+
+    const account = await Accounts.findById(accountId);
+
+    if (!account) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    await Accounts.findByIdAndDelete(accountId);
+
+    res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateAccount = async (req, res, next) => {
+  try {
+    const { accountId } = req.params; // Lấy accountId từ tham số URL
+    const { oldPassword, newPassword } = req.body; // Lấy mật khẩu cũ và mới từ body request
+
+    // Kiểm tra xem có thông tin đầy đủ hay không
+    if (!accountId || !oldPassword || !newPassword) {
+      return res.status(400).json({ error: 'Missing required parameters' });
+    }
+
+    // Tìm kiếm tài khoản trong cơ sở dữ liệu
+    const account = await Accounts.findById(accountId);
+
+    // Kiểm tra xem tài khoản có tồn tại hay không
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Kiểm tra xác thực mật khẩu cũ
+    const isPasswordValid = bcrypt.compareSync(oldPassword, account.MatKhau);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid old password' });
+    }
+
+    // Tạo mật khẩu mới và cập nhật vào cơ sở dữ liệu
+    const newSalt = bcrypt.genSaltSync(12);
+    const newHash = bcrypt.hashSync(newPassword, newSalt);
+
+    account.MatKhau = newHash;
+    await account.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
   } catch (err) {
     next(err);
   }

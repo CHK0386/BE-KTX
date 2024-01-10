@@ -1,37 +1,67 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const RoomSchema = new mongoose.Schema({
-    Title: {
-        type: String,
-        required: true,
+const RoomSchema = new mongoose.Schema(
+  {
+    dormId: {
+      type: mongoose.Schema.Types.ObjectId,
+      require: true
     },
-    StatusId: {
-        type: String,
-        enum: ['Available', 'Full'],
-        required: true,
+    Title: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String,
+      enum: [0, 1],
+      required: true
     },
     Price: {
-        type: Number,
-        required: true,
-    },
-    St: {
-        type: String,
-        required: true,
+      type: Number,
+      required: true
     },
     Slot: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true
     },
-    Floor: {
-        type: Number,
-        required: true,
+    availableSlot: {
+      type: Number
     },
-    Photos: {
-        type: [String],
-    },
-    RoomNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
-},
-    { timestamps: true }
+    roomMembers: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        },
+        HoTen: {
+          type: String
+        },
+        Mssv: {
+          type: String
+        },
+        CMND: {
+          type: String
+        },
+        Truong: {
+          type: String
+        },
+        Phone: {
+          type: String
+        },
+        Email: {
+          type: String
+        },
+        dateIn: {
+          type: Date,
+          required: true
+        },
+        dateOut: {
+          type: Date,
+          required: true
+        }
+      }
+    ]
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model("Room", RoomSchema);
+export default mongoose.model('Room', RoomSchema);

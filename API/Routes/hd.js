@@ -1,22 +1,20 @@
 import express from 'express';
 import { VerifyAdmin } from '../Utils/Verifytoken.js';
-import { createHD, createHDCT, getHDCT, getallHD, gethoadon, updateHD, updateHDCT } from '../Controllers/hoadon.js';
+import { createHD, getStudentBill, getallHD, getBillDetail, updateHD, updateHDCT } from '../Controllers/hoadon.js';
 
 const router = express.Router();
 
 //Create HD
 router.post('/', createHD);
-//Create HDCT
-router.post('/:hdId', createHDCT);
 //Update
 router.put('/:id', updateHD);
-router.put('/:id', updateHDCT);
+// router.put('/:id', updateHDCT);
 //Delete
 // router.delete("/:id", VerifyAdmin);
 //Get
-router.get('/student', getHDCT);
+router.get('/student/:cmnd', getStudentBill);
 //Getall
 router.get('/', getallHD);
-router.get('/hoadondetails/:id', gethoadon);
+router.get('/:id', getBillDetail);
 
 export default router;
