@@ -51,7 +51,7 @@ const Userchema = new mongoose.Schema(
       }
     },
     Phone: {
-      type: Number,
+      type: String,
       required: true
     },
     Email: {
