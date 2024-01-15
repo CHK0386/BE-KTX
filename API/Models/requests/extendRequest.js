@@ -50,6 +50,13 @@ const ExtendRequest = new mongoose.Schema(
       required: true,
       default: 0
       // 0 là chờ duyệt, 1 là duyêt, 2 là từ chối
+    },
+
+    rejectReason: {
+      type: String
+    },
+    updatedBy: {
+      type: String
     }
   },
   {

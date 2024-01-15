@@ -72,6 +72,12 @@ const ChangeRoomRequest = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
+  },
+  rejectReason: {
+    type: String
+  },
+  updatedBy: {
+    type: String
   }
 });
 

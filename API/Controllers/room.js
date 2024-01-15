@@ -130,6 +130,18 @@ export const getAllCheckoutRequest = async (req, res, next) => {
   }
 };
 
+export const getCheckoutRequest = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+
+    const requests = await checkOutRequest.find({ userId });
+    res.status(200).json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to retrieve change room requests.' });
+  }
+};
+
 export const requestCheckout = async (req, res, next) => {
   try {
     const { CMND, userId, userDetail, room, requestStatus } = req.body;
@@ -153,7 +165,7 @@ export const requestCheckout = async (req, res, next) => {
 export const updateCheckoutRequest = async (req, res, next) => {
   try {
     const requestId = req.params.id;
-    const { requestStatus, userId } = req.body;
+    const { requestStatus, userId, rejectReason, updatedBy } = req.body;
 
     // Kiểm tra nếu requestStatus là 1 (duyệt)
     if (requestStatus === 2) {
@@ -162,7 +174,10 @@ export const updateCheckoutRequest = async (req, res, next) => {
         return res.status(404).json({ error: 'Không tìm thấy yêu cầu trả phòng chờ duyệt cho người dùng này.' });
       }
 
-      request.requestStatus = 2;
+      request.requestStatus = requestStatus;
+      request.rejectReason = rejectReason;
+      request.updatedBy = updatedBy;
+
       await request.save();
 
       return res.status(200).json({ message: 'Yêu cầu trả phòng đã được từ chối.' });
@@ -202,9 +217,23 @@ export const updateCheckoutRequest = async (req, res, next) => {
   }
 };
 
+// Change room
+
 export const getAllChangeRoomRequest = async (req, res, next) => {
   try {
     const requests = await changeRoomRequest.find();
+    res.status(200).json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to retrieve change room requests.' });
+  }
+};
+
+export const getChangeRoomRequest = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+
+    const requests = await changeRoomRequest.find({ userId });
     res.status(200).json(requests);
   } catch (err) {
     console.error(err);
@@ -236,7 +265,7 @@ export const requestChangeRoom = async (req, res, next) => {
 export const updateChangeRoomRequest = async (req, res, next) => {
   try {
     const requestId = req.params.id;
-    const { requestStatus, userId } = req.body;
+    const { requestStatus, userId, rejectReason, updatedBy } = req.body;
 
     // Kiểm tra nếu requestStatus là 1 (duyệt)
     if (requestStatus === 2) {
@@ -246,7 +275,10 @@ export const updateChangeRoomRequest = async (req, res, next) => {
         return res.status(404).json({ error: 'Không tìm thấy yêu cầu trả phòng chờ duyệt cho người dùng này.' });
       }
 
-      request.requestStatus = 2;
+      request.requestStatus = requestStatus;
+      request.rejectReason = rejectReason;
+      request.updatedBy = updatedBy;
+
       await request.save();
 
       return res.status(200).json({ message: 'Yêu cầu trả phòng đã được từ chối.' });
@@ -329,6 +361,18 @@ export const getAllExtendRoomRequest = async (req, res, next) => {
   }
 };
 
+export const getExtendRoomRequest = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+
+    const requests = await extendRequest.find({ userId });
+    res.status(200).json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to retrieve change room requests.' });
+  }
+};
+
 export const requestExtend = async (req, res, next) => {
   try {
     const { userId, userDetail, roomId, roomTitle, dateOut, newDateOut } = req.body;
@@ -353,7 +397,7 @@ export const requestExtend = async (req, res, next) => {
 export const updateExtendRequest = async (req, res, next) => {
   try {
     const requestId = req.params.id;
-    const { requestStatus, userId } = req.body;
+    const { requestStatus, userId, rejectReason } = req.body;
 
     // Kiểm tra nếu requestStatus là 1 (duyệt)
     if (requestStatus === 2) {
@@ -363,6 +407,7 @@ export const updateExtendRequest = async (req, res, next) => {
       }
 
       request.requestStatus = 2;
+      request.rejectReason = rejectReason;
       await request.save();
 
       return res.status(200).json({ message: 'Yêu cầu trả phòng đã được từ chối.' });
@@ -414,6 +459,18 @@ export const getAllFixRoomRequest = async (req, res, next) => {
   }
 };
 
+export const getFixRoomRequest = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+
+    const requests = await fixRequest.find({ userId });
+    res.status(200).json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to retrieve change room requests.' });
+  }
+};
+
 export const requestFixRoom = async (req, res, next) => {
   try {
     const { userId, userDetail, room, note, newDateOut } = req.body;
@@ -442,6 +499,19 @@ export const updateFixRequest = async (req, res, next) => {
     const request = await fixRequest.findById(requestId);
     if (!request) {
       return res.status(404).json({ error: 'Không tìm thấy yêu cầu trả phòng chờ duyệt cho người dùng này.' });
+    }
+
+    if (requestStatus === 2) {
+      const request = await extendRequest.findById(requestId);
+      if (!request) {
+        return res.status(404).json({ error: 'Không tìm thấy yêu cầu trả phòng chờ duyệt cho người dùng này.' });
+      }
+
+      request.requestStatus = 2;
+      request.rejectReason = rejectReason;
+      await request.save();
+
+      return res.status(200).json({ message: 'Yêu cầu trả phòng đã được từ chối.' });
     }
 
     request.requestStatus = requestStatus;

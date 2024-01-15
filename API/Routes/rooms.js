@@ -6,6 +6,10 @@ import {
   getAllCheckoutRequest,
   getAllExtendRoomRequest,
   getAllFixRoomRequest,
+  getChangeRoomRequest,
+  getCheckoutRequest,
+  getExtendRoomRequest,
+  getFixRoomRequest,
   getRoom,
   getallRoom,
   requestChangeRoom,
@@ -26,9 +30,13 @@ const router = express.Router();
 // Get
 router.get('/', getallRoom);
 router.get('/checkout', getAllCheckoutRequest);
+router.get('/checkout/:userId', getCheckoutRequest);
 router.get('/change-room', VerifyAdmin, getAllChangeRoomRequest);
+router.get('/change-room/:userId', VerifyAdmin, getChangeRoomRequest);
 router.get('/extend', getAllExtendRoomRequest);
+router.get('/extend/:userId', getExtendRoomRequest);
 router.get('/fix', getAllFixRoomRequest);
+router.get('/fix/:userId', getFixRoomRequest);
 router.get('/:id', getRoom);
 
 //Create

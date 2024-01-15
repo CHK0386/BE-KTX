@@ -25,7 +25,7 @@ const HoaDonSchema = new mongoose.Schema(
         required: true
       },
       CMND: {
-        type: Number,
+        type: String,
         ref: 'User',
         required: true
       },
