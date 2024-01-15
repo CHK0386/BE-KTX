@@ -50,6 +50,12 @@ const HoaDonSchema = new mongoose.Schema(
         type: Date,
         required: true
       }
+    },
+    createdBy: {
+      type: String
+    },
+    updatedBy: {
+      type: String
     }
   },
   { timestamps: true }

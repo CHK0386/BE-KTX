@@ -6,7 +6,7 @@ import HoaDonDetails from '../Models/HoaDonDetails.js';
 
 //Create
 export const createHD = async (req, res, next) => {
-  const { roomId, price, status, CMND, userId, Mssv, dateIn, dateOut, title, HoTen } = req.body;
+  const { roomId, price, status, CMND, userId, Mssv, dateIn, dateOut, title, createdBy, updatedBy } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -21,6 +21,8 @@ export const createHD = async (req, res, next) => {
       roomId,
       price,
       status,
+      createdBy,
+      updatedBy,
       billDetails: {
         HoTen: user?.HoTen,
         CMND,

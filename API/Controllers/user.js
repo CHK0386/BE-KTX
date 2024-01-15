@@ -1,3 +1,4 @@
+import Room from '../Models/Room.js';
 import User from '../Models/User.js';
 
 //Create
@@ -22,10 +23,30 @@ export const updateUser = async (req, res, next) => {
 
 //Delete
 export const deleteUser = async (req, res, next) => {
+  const userId = req.params.id;
+
   try {
-    await User.findByIdAndDelete(req.params.id);
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+    const roomsToUpdate = await Room.find({ 'roomMembers.userId': userId });
+
+    await User.findByIdAndDelete(userId);
+
+    await Promise.all(
+      roomsToUpdate.map(async (room) => {
+        room.roomMembers = room.roomMembers.filter((member) => member.userId.toString() !== userId);
+        room.availableSlot = room.Slot - room.roomMembers.length;
+
+        await room.save();
+      })
+    );
+
     res.status(200).json('Delete Success');
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };
