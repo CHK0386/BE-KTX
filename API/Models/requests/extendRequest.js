@@ -4,7 +4,7 @@ const ExtendRequest = new mongoose.Schema(
   {
     title: {
       type: String,
-      default: 'Yêu cầu chuyển phòng'
+      default: 'Yêu cầu gia hạn'
     },
 
     userId: {
