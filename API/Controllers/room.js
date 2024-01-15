@@ -45,7 +45,7 @@ export const updateRoom = async (req, res, next) => {
       return res.status(404).json({ message: 'Room not found' });
     }
 
-    let availableSlot;
+    let availableSlot, status;
 
     if (Slot) {
       availableSlot = Slot - (roomMembers ? roomMembers.length : 0);
@@ -57,7 +57,15 @@ export const updateRoom = async (req, res, next) => {
       return res.status(300).json('Phòng đã đầy');
     }
 
-    const updatedRoom = await Room.findByIdAndUpdate(roomId, { $set: { ...req.body, availableSlot } }, { new: true });
+    if (availableSlot === 0) {
+      status = 1;
+    }
+
+    const updatedRoom = await Room.findByIdAndUpdate(
+      roomId,
+      { $set: { ...req.body, availableSlot, status } },
+      { new: true }
+    );
 
     res.status(200).json(updatedRoom);
   } catch (error) {
