@@ -32,7 +32,7 @@ router.get('/', getallRoom);
 router.get('/checkout', getAllCheckoutRequest);
 router.get('/checkout/:userId', getCheckoutRequest);
 router.get('/change-room', VerifyAdmin, getAllChangeRoomRequest);
-router.get('/change-room/:userId', VerifyAdmin, getChangeRoomRequest);
+router.get('/change-room/:userId', getChangeRoomRequest);
 router.get('/extend', getAllExtendRoomRequest);
 router.get('/extend/:userId', getExtendRoomRequest);
 router.get('/fix', getAllFixRoomRequest);
