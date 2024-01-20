@@ -62,9 +62,20 @@ export const getUser = async (req, res, next) => {
 //Getall
 export const getallUser = async (req, res, next) => {
   try {
-    const users = await User.find({ isAdmin: { $ne: true } });
+    const currentPage = parseInt(req.query.currentPage) || 1;
+    const itemPage = parseInt(req.query.itemPage) || 10; // Số lượng người dùng mỗi trang
+    const skip = (currentPage - 1) * itemPage;
 
-    res.status(200).json(users);
+    const [users, totalUsers] = await Promise.all([
+      User.find({ isAdmin: { $ne: true } })
+        .skip(skip)
+        .limit(itemPage),
+      User.countDocuments({ isAdmin: { $ne: true } })
+    ]);
+
+    const totalPages = Math.ceil(totalUsers / itemPage);
+
+    res.status(200).json({ users, totalPages });
   } catch (err) {
     next(err);
   }

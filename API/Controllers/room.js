@@ -121,7 +121,7 @@ export const getRoom = async (req, res, next) => {
 //Getall
 export const getallRoom = async (req, res, next) => {
   try {
-    const rooms = await Room.find();
+    const rooms = await Room.find().sort({ Title: 1 }); // Sắp xếp theo Title tăng dần (a đến z)
     res.status(200).json(rooms);
   } catch (err) {
     next(err);
@@ -383,7 +383,7 @@ export const getExtendRoomRequest = async (req, res, next) => {
 
 export const requestExtend = async (req, res, next) => {
   try {
-    const { userId, userDetail, roomId, roomTitle, dateOut, newDateOut } = req.body;
+    const { userId, userDetail, roomId, roomTitle, dateOut, newDateOut, extendPrice } = req.body;
 
     const request = new extendRequest({
       userId,
@@ -391,7 +391,8 @@ export const requestExtend = async (req, res, next) => {
       roomId,
       roomTitle,
       dateOut,
-      newDateOut
+      newDateOut,
+      extendPrice
     });
 
     await request.save();

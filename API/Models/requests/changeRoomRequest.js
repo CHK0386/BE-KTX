@@ -12,7 +12,7 @@ const ChangeRoomRequest = new mongoose.Schema({
   },
   userDetail: {
     CMND: {
-      type: Number,
+      type: String,
       required: true
     },
     HoTen: {
@@ -37,6 +37,9 @@ const ChangeRoomRequest = new mongoose.Schema({
     status: {
       type: Number,
       enum: [0, 1]
+    },
+    price: {
+      type: Number
     }
   },
 
@@ -56,6 +59,9 @@ const ChangeRoomRequest = new mongoose.Schema({
     status: {
       type: Number,
       enum: [0, 1]
+    },
+    price: {
+      type: Number
     }
   },
 

@@ -13,7 +13,7 @@ const CheckOutRequestSchema = new mongoose.Schema(
     },
     userDetail: {
       CMND: {
-        type: Number,
+        type: String,
         required: true
       },
       HoTen: {

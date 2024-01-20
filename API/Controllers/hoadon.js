@@ -74,8 +74,15 @@ export const getStudentBill = async (req, res, next) => {
 //Getall
 export const getallHD = async (req, res, next) => {
   try {
-    const hd = await HD.find();
-    res.status(200).json(hd);
+    const currentPage = parseInt(req.query.currentPage) || 1;
+    const itemPage = parseInt(req.query.itemPage) || 10; // Số lượng người dùng mỗi trang
+    const skip = (currentPage - 1) * itemPage;
+
+    const [bills, totalBills] = await Promise.all([HD.find().skip(skip).limit(itemPage), HD.countDocuments()]);
+
+    const totalPages = Math.ceil(totalBills / itemPage);
+
+    res.status(200).json({ bills, totalPages });
   } catch (err) {
     next(err);
   }

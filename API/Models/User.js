@@ -48,6 +48,9 @@ const Userchema = new mongoose.Schema(
       status: {
         type: Number,
         enum: [0, 1]
+      },
+      price: {
+        type: Number
       }
     },
     Phone: {

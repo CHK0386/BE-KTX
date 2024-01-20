@@ -15,14 +15,23 @@ const ExtendRequest = new mongoose.Schema(
 
     userDetail: {
       CMND: {
-        type: Number,
+        type: String,
         required: true
       },
 
       HoTen: {
         type: String,
         required: true
+      },
+      Mssv: {
+        type: String,
+        required: true
       }
+    },
+
+    extendPrice: {
+      type: Number,
+      required: true
     },
 
     roomId: {
