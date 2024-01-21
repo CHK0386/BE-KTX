@@ -35,6 +35,7 @@ export const VerifyAdmin = (req, res, next) => {
   }
 
   Jwt.verify(token, process.env.Jwt, (err, decodedToken) => {
+    console.log(err);
     if (err) {
       return res.status(403).json({ message: 'Token is not valid!' });
     }
