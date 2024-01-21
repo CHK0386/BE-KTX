@@ -21,7 +21,7 @@ const app = express();
 
 dotenv.config();
 
-var whitelist = ['http://localhost:8000', 'http://localhost:3000']; //white list consumers
+var whitelist = ['http://localhost:8000', 'http://localhost:3000', 'https://dorm-manage.vercel.app']; //white list consumers
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
