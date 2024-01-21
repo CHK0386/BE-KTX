@@ -31,7 +31,11 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) return next(createError(400, 'Sai mật khẩu!'));
     const role = await Role.findOne({ _id: account.RoleId });
 
-    const token = jwt.sign({ id: account._id, CMND: account.CMND, RoleId: account.RoleId }, process.env.JWT, {});
+    const token = jwt.sign(
+      { id: account._id, CMND: account.CMND, RoleId: account.RoleId },
+      '67F89EAB09BFA43099D754B471074DC4CBE7462D3246C6AF8354494C22D553D3',
+      {}
+    );
     const { MatKhau, RoleId, CMND, _id } = account._doc;
     res
       .cookie('access_token', token, {

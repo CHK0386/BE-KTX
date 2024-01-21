@@ -10,7 +10,7 @@ export const Verifytoken = (req, res, next) => {
   if (!token) {
     return next(createError(401, 'you are not authenticated!'));
   }
-  Jwt.verify(token, process.env.Jwt, (err, account) => {
+  Jwt.verify(token, '67F89EAB09BFA43099D754B471074DC4CBE7462D3246C6AF8354494C22D553D3', (err, account) => {
     if (err) return next(createError(403, 'Token is not valid!'));
     req.account = account;
     next();
@@ -34,8 +34,7 @@ export const VerifyAdmin = (req, res, next) => {
     return res.status(401).json({ message: 'You are not authenticated!' });
   }
 
-  Jwt.verify(token, process.env.Jwt, (err, decodedToken) => {
-    console.log(process.env.Jwt);
+  Jwt.verify(token, '67F89EAB09BFA43099D754B471074DC4CBE7462D3246C6AF8354494C22D553D3', (err, decodedToken) => {
     if (err) {
       return res.status(403).json({ message: 'Token is not valid!' });
     }
