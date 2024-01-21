@@ -30,13 +30,12 @@ export const VerifyUser = (req, res, next) => {
 export const VerifyAdmin = (req, res, next) => {
   const token = req.cookies.access_token;
 
-  console.log(req.cookies);
   if (!token) {
     return res.status(401).json({ message: 'You are not authenticated!' });
   }
 
   Jwt.verify(token, process.env.Jwt, (err, decodedToken) => {
-    console.log(err);
+    console.log(process.env.Jwt);
     if (err) {
       return res.status(403).json({ message: 'Token is not valid!' });
     }
