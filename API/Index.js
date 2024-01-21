@@ -81,10 +81,7 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Endpoint Not found'));
 });
 
-// handle error
 app.use(errorHandler);
-
-// celebrate error handler
 app.use(errors());
 
 app.listen(8800, () => {
